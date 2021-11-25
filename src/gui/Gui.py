@@ -1,11 +1,19 @@
-from tkinter import BOTH, LEFT, RAISED, RIGHT, Y, Scale, HORIZONTAL, Button, IntVar, Checkbutton
+from tkinter import Tk, BOTH, LEFT, RAISED, RIGHT, Y, Scale, HORIZONTAL, Button, IntVar, Checkbutton
 from tkinter.ttk import Frame, Label
 
 
+def main():
+    root = Tk()
+    root.geometry("800x600")
+    app = Gui()
+    root.mainloop()
+
+
 class Gui(Frame):
+#    def __init__(self, _backend):
     def __init__(self):
         super().__init__()
-
+#        self.backend = _backend
         self.initUI()
 
     def initUI(self):
