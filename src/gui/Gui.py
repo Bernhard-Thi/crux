@@ -15,25 +15,25 @@ class Gui(Frame):
     def __init__(self):
         super().__init__()
 #        self.backend = _backend
-        self.initUI()
+        self.init_ui()
 
-    def initUI(self):
+    def init_ui(self):
 
         self.master.title("crux")
         self.pack(fill=BOTH, expand=True)
 
-####### ------- Linke Seite: ------- #######
+# ###### ------- Linke Seite: ------- #######
         left_side = Frame(self, relief=RAISED, borderwidth=2)
         left_side.pack(side=LEFT, fill=Y)
 
         label_single_car = Label(left_side, text="Einzelfahrzeug", width=50, anchor="center", background="lightblue")
         label_single_car.pack(padx=5, pady=5)
 
-#--- Verbindungen ---
+# --- Verbindungen ---
         label_single_car_connection = Label(left_side, text="MAC-Adresse", width=50, anchor="w")
         label_single_car_connection.pack(padx=5, pady=5)
 
-#--- MAC-Adressen der Fahrzeuge ---
+# --- MAC-Adressen der Fahrzeuge ---
         mac_list = [
             "ed:00:db:97:c2:de",
             "fd:97:48:fb:a7:fe"
@@ -48,7 +48,7 @@ class Gui(Frame):
         button_connect.bind('<Button-1>', self.connect)
         button_connect.pack()
 
-#--- Geschwindigkeitskontrolle ---
+# --- Geschwindigkeitskontrolle ---
         label_single_car_speed = Label(left_side, text="Geschwindigkeit", width=50, anchor="w")
         label_single_car_speed.pack(padx=5, pady=5)
 
@@ -72,7 +72,7 @@ class Gui(Frame):
         label_single_car_battery_status_view = Label(left_side, text="", width=5, background="yellow")
         label_single_car_battery_status_view.pack()
 
-#---  Verhalten ---
+# ---  Verhalten ---
         label_single_car_handling = Label(left_side, text="Verhalten des Fahrzeuges", width=50, anchor="w")
         label_single_car_handling.pack(padx=5, pady=5)
 
@@ -85,24 +85,30 @@ class Gui(Frame):
         check_single_car_opt2.pack()
 
         option3 = IntVar()
-        check_single_car_opt3 = Checkbutton(left_side, text="Möglichst ohne stoppen", variable=option3, width=50, anchor="w")
+        check_single_car_opt3 = Checkbutton(
+            left_side,
+            text="Möglichst ohne stoppen",
+            variable=option3,
+            width=50,
+            anchor="w"
+        )
         check_single_car_opt3.pack()
 
-#--- Start/Stop Button ---
+# --- Start/Stop Button ---
         button_start = Button(left_side, text="Start")
         button_start.pack()
 
         button_stop = Button(left_side, text="Stop")
         button_stop.pack()
 
-####### ------- Rechte Seite ------- #######
+# ###### ------- Rechte Seite ------- #######
         right_side = Frame(self, relief=RAISED, borderwidth=2)
         right_side.pack(side=RIGHT, fill=Y)
 
         label_multiple_car = Label(right_side, text="Schwarm", width=50, anchor="center", background="lightgreen")
         label_multiple_car.pack(padx=5, pady=5)
 
-#--- Geschwindigkeitskontrolle Schwarm ---
+# --- Geschwindigkeitskontrolle Schwarm ---
 
         label_multiple_car_speed = Label(right_side, text="Geschwindigkeit", width=50, anchor="center")
         label_multiple_car_speed.pack(padx=5, pady=5)
@@ -121,11 +127,25 @@ class Gui(Frame):
         ## Dropdown disablen
         ## Connect anstoßen
         ## Button soll Disconnect Button werden
-        print("commingsoon")
+        print("comming soon")
+
+    def disconnect(self, event):
+        ## Was soll diese Funktion machen?
+        ## Dropdown enablen
+        ## Fahrzeuge disconnecten
+        ## Button soll Connect Button werden
+        print("comming soon")
 
     def check_battery(self):
         ## Was soll diese Funktion machen?
         ## Batterie Status überprüfen
         ## xxx des label_single_car_battery_status in 038% umwandeln
         ## label_single_car_battery_status_view background nach Batteriestand färben < 10% => rot
+        ## Funktion soll während der Fahrzeug intervallmäßig laufen, wenn auf Startbutton gedrück wurde
         print("test")
+
+    def changeSpeed(self):
+        ## Diese Funktion soll nach loslassen des Reglers den Wert der Scale auslesen
+        ## Außerdem soll sie die Geschwindigkeit des ausgewählten Fahrzeug (siehe Dropdown) steuern
+        ## optionMenu (input_field)
+        print("coming soon")
