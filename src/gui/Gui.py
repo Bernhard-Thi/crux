@@ -147,6 +147,26 @@ class Gui(Frame):
         )
         scale_single_car_speed.pack(padx=5, pady=5)
 
+# --- List of other cars
+        multiple_car_information_area = Frame(right_side, relief=RIDGE, borderwidth=2)
+        multiple_car_information_area.pack()
+
+        mac_list_multiple = [
+            ("car_name", "fd:97:48:fb:a7:fe"),
+            ("example", "00:00:00:00:00:00")
+        ]
+
+        for cars in mac_list_multiple:
+            car_area = Frame(multiple_car_information_area)
+            car_area.pack()
+            label = Label(car_area, text=cars[0] + " mit MAC (" + cars[1] + ")", width=48)
+            label.pack()
+            label_battery = Label(car_area, text="Batteriestatus: ")
+            label_battery.pack(side=LEFT)
+            display_battery = Label(car_area, text="", width=35, background="yellow")
+            display_battery.pack(side=LEFT)
+
+
     def add_mac(self, event):
         ## Was soll diese Funktion machen?
         ## entry_connection_add auslesen und in mac_list einfügen
