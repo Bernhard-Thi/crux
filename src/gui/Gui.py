@@ -1,11 +1,11 @@
-from tkinter import Tk, BOTH, LEFT, RAISED, RIGHT, Y, Scale, HORIZONTAL, Button, IntVar, Checkbutton, OptionMenu, \
+from tkinter import Tk, BOTH, LEFT, RAISED, RIDGE, RIGHT, Y, Scale, HORIZONTAL, Button, OptionMenu, \
     StringVar
-from tkinter.ttk import Frame, Label
+from tkinter.ttk import Frame, Label, Entry
 
 
 def main():
     root = Tk()
-    root.geometry("800x600")
+    root.geometry("800x525")
     app = Gui()
     root.mainloop()
 
@@ -26,12 +26,28 @@ class Gui(Frame):
         left_side = Frame(self, relief=RAISED, borderwidth=2)
         left_side.pack(side=LEFT, fill=Y)
 
-        label_single_car = Label(left_side, text="Einzelfahrzeug", width=50, anchor="center", background="lightblue")
-        label_single_car.pack(padx=5, pady=5)
+        label_single_car = Label(
+            left_side,
+            text="Einzelfahrzeug",
+            width=50,
+            anchor="center",
+            background="lightblue",
+            relief=RAISED
+        )
+        label_single_car.pack()
+
+# ###### ------- Connection Bereich: ------- #######
+        connection_area = Frame(left_side, relief=RIDGE, borderwidth=2)
+        connection_area.pack()
 
 # --- Verbindungen ---
-        label_single_car_connection = Label(left_side, text="MAC-Adresse", width=50, anchor="w")
-        label_single_car_connection.pack(padx=5, pady=5)
+        label_single_car_connection = Label(
+            connection_area,
+            text="Verbundenes Einzelauto - MAC Adresse",
+            width=48,
+            anchor="w"
+        )
+        label_single_car_connection.pack()
 
 # --- MAC-Adressen der Fahrzeuge ---
         mac_list = [
@@ -41,100 +57,114 @@ class Gui(Frame):
 
         chosen_value = StringVar(self)
         chosen_value.set(mac_list[0])
-        input_field = OptionMenu(left_side, chosen_value, *mac_list)
+        input_field = OptionMenu(connection_area, chosen_value, *mac_list)
         input_field.pack()
 
-        button_connect = Button(left_side, text="Verbinden")
+        button_connect = Button(connection_area, text="Verbinden")
         button_connect.bind('<Button-1>', self.connect)
         button_connect.pack()
 
+        entry_conncection_add = Entry(connection_area)
+        entry_conncection_add.pack()
+
+        button_connection_add = Button(connection_area, text="Adresse hinzufügen")
+        button_connection_add.bind('<Button-1>', self.add_mac)
+        button_connection_add.pack()
+
+# ###### ------- Fahrzeugkontroll Bereich: ------- #######
+        control_area = Frame(left_side, relief=RIDGE, borderwidth=2)
+        control_area.pack()
+
 # --- Geschwindigkeitskontrolle ---
-        label_single_car_speed = Label(left_side, text="Geschwindigkeit", width=50, anchor="w")
-        label_single_car_speed.pack(padx=5, pady=5)
+        label_single_car_speed = Label(control_area, text="Geschwindigkeit", width=48, anchor="w")
+        label_single_car_speed.pack()
 
         scale_single_car_speed = Scale(
-            left_side,
+            control_area,
             from_=0,
             to=1000,
             orient=HORIZONTAL,
             length=200
         )
-        scale_single_car_speed.pack(padx=5, pady=5)
+        scale_single_car_speed.pack()
 
 # --- Batterie Anzeige ---
-        label_single_car_battery = Label(left_side, text="Batterieanzeige", width=50, anchor="w")
-        label_single_car_battery.pack(padx=5, pady=5)
+        label_single_car_battery = Label(control_area, text="Batterieanzeige", width=48, anchor="w")
+        label_single_car_battery.pack()
 
-        label_single_car_battery_status = Label(left_side, text="xxx %", width=50, anchor="center")
+        label_single_car_battery_status = Label(control_area, text="xxx %", width=48, anchor="center")
         label_single_car_battery_status.pack()
 
 # --- Batterie Styles ---
-        label_single_car_battery_status_view = Label(left_side, text="", width=5, background="yellow")
+        label_single_car_battery_status_view = Label(control_area, text="", width=5, background="yellow")
         label_single_car_battery_status_view.pack()
 
-# ---  Verhalten ---
-        label_single_car_handling = Label(left_side, text="Verhalten des Fahrzeuges", width=50, anchor="w")
-        label_single_car_handling.pack(padx=5, pady=5)
+# ###### ------- Platzhalter Bereich: ------- #######
+        placeholder_area = Frame(left_side, relief=RIDGE, borderwidth=2, height=200)
+        placeholder_area.pack()
 
-        option1 = IntVar()
-        check_single_car_opt1 = Checkbutton(left_side, text="Rechts fahren", variable=option1, width=50, anchor="w")
-        check_single_car_opt1.pack()
-
-        option2 = IntVar()
-        check_single_car_opt2 = Checkbutton(left_side, text="Möglichst schnell", variable=option2, width=50, anchor="w")
-        check_single_car_opt2.pack()
-
-        option3 = IntVar()
-        check_single_car_opt3 = Checkbutton(
-            left_side,
-            text="Möglichst ohne stoppen",
-            variable=option3,
-            width=50,
-            anchor="w"
-        )
-        check_single_car_opt3.pack()
+# ###### ------- Button Bereich: ------- #######
+        button_area = Frame(left_side, relief=RIDGE, borderwidth=2)
+        button_area.pack()
 
 # --- Start/Stop Button ---
-        button_start = Button(left_side, text="Start")
-        button_start.pack()
+        placeholder_button = Label(button_area, text="", width=33)
+        placeholder_button.pack(side=LEFT)
 
-        button_stop = Button(left_side, text="Stop")
-        button_stop.pack()
+        button_start = Button(button_area, text="Start")
+        button_start.pack(side=LEFT)
+
+        button_stop = Button(button_area, text="Stop")
+        button_stop.pack(side=LEFT)
 
 # ###### ------- Rechte Seite ------- #######
         right_side = Frame(self, relief=RAISED, borderwidth=2)
         right_side.pack(side=RIGHT, fill=Y)
 
-        label_multiple_car = Label(right_side, text="Schwarm", width=50, anchor="center", background="lightgreen")
-        label_multiple_car.pack(padx=5, pady=5)
+        label_multiple_car = Label(
+            right_side,
+            text="Schwarm",
+            width=50,
+            anchor="center",
+            background="lightgreen",
+            relief=RAISED
+        )
+        label_multiple_car.pack()
 
 # --- Geschwindigkeitskontrolle Schwarm ---
+        speed_multiple_area = Frame(right_side, relief=RIDGE, borderwidth=2)
+        speed_multiple_area.pack()
 
-        label_multiple_car_speed = Label(right_side, text="Geschwindigkeit", width=50, anchor="center")
-        label_multiple_car_speed.pack(padx=5, pady=5)
+        label_multiple_car_speed = Label(speed_multiple_area, text="Geschwindigkeit", width=50, anchor="w")
+        label_multiple_car_speed.pack()
 
         scale_single_car_speed = Scale(
-            right_side,
+            speed_multiple_area,
             from_=0,
             to=1000,
             orient=HORIZONTAL,
             length=200
         )
         scale_single_car_speed.pack(padx=5, pady=5)
+
+    def add_mac(self, event):
+        ## Was soll diese Funktion machen?
+        ## entry_connection_add auslesen und in mac_list einfügen
+        print("coming soon")
 
     def connect(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstoßen
         ## Button soll Disconnect Button werden
-        print("comming soon")
+        print("coming soon")
 
     def disconnect(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown enablen
         ## Fahrzeuge disconnecten
         ## Button soll Connect Button werden
-        print("comming soon")
+        print("coming soon")
 
     def check_battery(self):
         ## Was soll diese Funktion machen?
