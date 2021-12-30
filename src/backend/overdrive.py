@@ -27,6 +27,7 @@ class Overdrive:
         self.piece = 0
         self._locationChangeCallbackFunc = None
         self._pongCallbackFunc = None
+        self._batteryCallbackFunc = None
         self._transitionCallbackFunc = None
         while True:
             try:
@@ -76,7 +77,7 @@ class Overdrive:
 
     def changeSpeed(self, speed, accel):
         """Change speed for Overdrive.
-        
+
         Parameters:
         speed -- Desired speed. (from 0 - 1000)
         accel -- Desired acceleration. (from 0 - 1000)
@@ -141,10 +142,22 @@ class Overdrive:
             if self.getNotificationsReceived() > 0:
                 break
             logging.getLogger("anki.overdrive").error("Set notify failed")
-    
+
     def ping(self):
         """Ping command."""
         self.sendCommand(b"\x16")
+
+    def setEngineLight(self, red,green,blue):
+        #command = struct.pack("<BIIIIIIIIIIIIIIII", 0x33, 0x03,0x00,0x00,red,red,0x00,0x03,0x00,green,green,0x00,0x02,0x00,blue,blue,0x00)
+        #self.sendCommand(command)
+        self.sendCommand(b"\x33\x03\x00\x00"+chr(red).encode()+chr(red).encode()+ b"\x00\x03\x00" + chr(green).encode() + chr(green).encode()+
+         b"\x00\x02\x00" + chr(blue).encode()+chr(blue).encode()+b"\x00")
+
+    def setEngineLight2(self):
+        self.sendCommand(b"\x33\x03\x00\x00\x00\x00\x00\x03\x00\x09\x09\x00\x02\x00\x09\x09\x00")
+
+    def getBatteryLevel(self):
+        self.sendCommand(b"\x1a")
 
     def _executor(self):
         """Notification thread, for internal use only."""
@@ -183,7 +196,7 @@ class Overdrive:
 
     def sendCommand(self, command):
         """Send raw command to Overdrive
-        
+
         Parameters:
         command -- Raw bytes command, without length.
         """
@@ -223,13 +236,20 @@ class Overdrive:
 
     def _pongCallback(self):
         """Pong callback wrapper.
-        
+
         Parameters:
         addr -- MAC address of car
         """
         if self._pongCallbackFunc is not None:
             self._pongCallbackFunc(self.addr)
-    
+
+    def setBatteryCallback(self, func):
+        self._batteryCallbackFunc = func
+
+    def _batteryCallback(self, batteryLevel):
+        if self._batteryCallbackFunc is not None:
+            self._batteryCallbackFunc(self.addr, batteryLevel)
+
     def setTransitionCallback(self, func):
         """Set piece transition callback.
 
@@ -240,7 +260,7 @@ class Overdrive:
 
     def _transitionCallback(self):
         """Piece transition callback wrapper.
-        
+
         Parameters:
         addr -- MAC address of car
         """
@@ -275,6 +295,10 @@ class OverdriveDelegate(btle.DefaultDelegate):
             elif commandId == 0x17:
                 # Pong
                 threading.Thread(target=self.overdrive._pongCallback).start()
+            elif commandId == 0x1b:
+                # Battery
+                batteryLevel = struct.unpack_from("H", data, 2)
+                threading.Thread(target=self.overdrive._batteryCallback, args=batteryLevel).start()
 
     def setHandle(self, handle):
         self.handle = handle
