@@ -36,17 +36,16 @@ class FancyBackend:
         if addr == self._target_mac:
             self._transitions = (self._transitions + 1) % 8
         else:
-            print(f"unexpected mac in transition callback [#{addr}], expected [#{self._target_mac}]")
+            print(f"unexpected mac in transition callback [{addr}], expected [{self._target_mac}]")
 
     def batteryCallback(self, addr, batteryLevel):
         if addr == self._target_mac:
             self._battery = int((batteryLevel / 4200 )* 100)
         else:
-            print(f"unexpected mac in battery callback [#{addr}], expected [#{self._target_mac}]")
+            print(f"unexpected mac in battery callback [{addr}], expected [{self._target_mac}]")
 
 #type slow, or fast brake
 def carBrake(red_car, blue_car, diff_time, speed):
-    global transitions_red
 
     if red_car.getTransitions() == 0 and diff_time > 0.6 and speed < 600:
         red_car.getOverdrive().setEngineLight(0, 15, 15)
@@ -93,7 +92,7 @@ def main():
         # NUMBER 1
 
         if (red_car.getTransitions() == 4) and (blue_car.getTransitions() == 7 or blue_car.getTransitions() == 0):
-            print("Diff-time: " + str(diff_time))
+            print(f"Diff-time: {diff_time}")
             print("N1")
             stopped_car = carBrake(red_car, blue_car, diff_time, speed)
             while True:
@@ -106,10 +105,10 @@ def main():
 
         #N2
         if (red_car.getTransitions() == 0) and (blue_car.getTransitions() == 3 or blue_car.getTransitions() == 4):
-            print("Diff-time: " + str(diff_time))
+            print(f"Diff-time: {diff_time}")
 
-            print("N2" + "T_blue: " + str(blue_car.getTransitions()) + " T_red=" + str(transitions_red))
-            stopped_car = carBrake(red_car, blue_car, diff_time, speed_random)
+            print(f"N2 T_blue: {blue_car.getTransitions()} T_red={blue_car.getTransitions()}")
+            stopped_car = carBrake(red_car, blue_car, diff_time, speed)
 
             while True:
                 if blue_car.getTransitions() == 6:
