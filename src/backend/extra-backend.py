@@ -7,8 +7,6 @@ from random import randrange
 #rot 18-20-18
 #blau 17-23-17
 
-#red_speed = 600
-#blue_speed = 800
 
 class FancyBackend:
     def __init__(self, mac_addr):
@@ -19,6 +17,10 @@ class FancyBackend:
         self._battery = 0
         self._overdrive = Overdrive(mac_addr)
 
+        # setup callbacks
+        self.getOverdrive().setTransitionCallback(self.transitionCallback)
+        self.getOverdrive().setBatteryCallback(self.batteryCallback)
+
     def getOverdrive(self):
         return self._overdrive
 
@@ -26,20 +28,21 @@ class FancyBackend:
         return self._transitions
 
     #TODO check
-    def setSpeed(self, speed):
+    def changeSpeed(self, new_speed, accel=1000):
+        self.getOverdrive().changeSpeed(new_speed, accel)
         self._speed = speed
 
     def transitionCallback(self, addr):
         if addr == self._target_mac:
             self._transitions = (self._transitions + 1) % 8
         else:
-            print(f"unexpected mac in transition callback: [#{self._target_mac}]")
+            print(f"unexpected mac in transition callback [#{addr}], expected [#{self._target_mac}]")
 
     def batteryCallback(self, addr, batteryLevel):
         if addr == self._target_mac:
             self._battery = int((batteryLevel / 4200 )* 100)
         else:
-            print(f"unexpected mac in battery callback: [#{self._target_mac}]")
+            print(f"unexpected mac in battery callback [#{addr}], expected [#{self._target_mac}]")
 
 #type slow, or fast brake
 def carBrake(red_car, blue_car, diff_time, speed):
@@ -55,7 +58,7 @@ def carBrake(red_car, blue_car, diff_time, speed):
         sleep(0.5)
         return red_car
     else:
-        red_car.getOverdrive().changeSpeed(0, 1000)
+        red_car.changeSpeed(0)
         red_car.getOverdrive().setEngineLight(15, 0, 0)
 
     return red_car
@@ -64,8 +67,6 @@ def random_speed():
     return random.choice([400, 700, 800])
 
 def main():
-    global transition_time_red
-
     mac_red  = "ed:00:db:97:c2:de" #in echt red
     mac_blue = "FD:97:48:FB:A7:FE" #in echt blue
 
@@ -74,17 +75,12 @@ def main():
 
     speed = 0
 
-    for car in [blue_car, red_car]:
-        car.getOverdrive().setTransitionCallback(transitionCallback)
-        car.getOverdrive().setBatteryCallback(batteryCallback)
-
-
     red_car.getOverdrive().getBatteryLevel()
     red_car.getOverdrive().changeLane(1000, 1000, 50)
-    red_car.getOverdrive().changeSpeed(red_speed, 1000)
+    red_car.changeSpeed(600) # red_speed
     blue_car.getOverdrive().changeLane(1000, 1000, -30)
 
-    blue_car.getOverdrive().changeSpeed(blue_speed, 1000)
+    blue_car.changeSpeed(800) # blue_speed
     blue_car.getOverdrive().setEngineLight(15, 7, 10)
 
     sleep(1)
@@ -92,35 +88,34 @@ def main():
     ### Collision-Detection-ALgorithm
     while True:
 
-        diff_time = time.perf_counter() - transition_time_red
+        diff_time = time.perf_counter() - red_car.getTransitions()
 
         # NUMBER 1
 
-        if (transitions_red == 4) and (transitions_blue == 7 or transitions_blue == 0):
+        if (red_car.getTransitions() == 4) and (blue_car.getTransitions() == 7 or blue_car.getTransitions() == 0):
             print("Diff-time: " + str(diff_time))
             print("N1")
             stopped_car = carBrake(red_car, blue_car, diff_time, speed)
             while True:
-                if transitions_blue == 1 or transitions_blue == 2:
+                if blue_car.getTransitions() == 1 or blue_car.getTransitions() == 2:
                     sleep(0.5)
                     speed = random_speed()
-                    stopped_car.changeSpeed(speed, 1000)
-                    red_car.setEngineLight(0, 15, 0)
+                    stopped_car.changeSpeed(speed)
+                    red_car.getOverdrive().setEngineLight(0, 15, 0)
                     break
 
         #N2
-
-        if (transitions_red == 0) and (transitions_blue == 3 or transitions_blue == 4):
+        if (red_car.getTransitions() == 0) and (blue_car.getTransitions() == 3 or blue_car.getTransitions() == 4):
             print("Diff-time: " + str(diff_time))
 
-            print("N2" + "T_blue: " + str(transitions_blue) + " T_red=" + str(transitions_red))
+            print("N2" + "T_blue: " + str(blue_car.getTransitions()) + " T_red=" + str(transitions_red))
             stopped_car = carBrake(red_car, blue_car, diff_time, speed_random)
 
             while True:
-                if transitions_blue == 6:
-                    speed_random = random_speed()
-                    stopped_car.changeSpeed(speed_random,1000)
-                    red_car.setEngineLight(0,15,0)
+                if blue_car.getTransitions() == 6:
+                    speed = random_speed()
+                    stopped_car.changeSpeed(speed)
+                    red_car.setEngineLight(0, 15, 0)
                     break
 
 
