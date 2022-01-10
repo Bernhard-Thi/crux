@@ -67,7 +67,7 @@ class Gui(Frame):
         entry_conncection_add = Entry(connection_area)
         entry_conncection_add.pack()
 
-        button_connection_add = Button(connection_area, text="Adresse hinzufügen")
+        button_connection_add = Button(connection_area, text="Adresse hinzufuegen")
         button_connection_add.bind('<Button-1>', self.add_mac)
         button_connection_add.pack()
 
@@ -169,13 +169,13 @@ class Gui(Frame):
 
     def add_mac(self, event):
         ## Was soll diese Funktion machen?
-        ## entry_connection_add auslesen und in mac_list einfügen
+        ## entry_connection_add auslesen und in mac_list einfuegen
         print("coming soon")
 
     def connect(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
-        ## Connect anstoßen
+        ## Connect anstossen
         ## Button soll Disconnect Button werden
         print("coming soon")
 
@@ -188,14 +188,14 @@ class Gui(Frame):
 
     def check_battery(self):
         ## Was soll diese Funktion machen?
-        ## Batterie Status überprüfen
+        ## Batterie Status ueberpruefen
         ## xxx des label_single_car_battery_status in 038% umwandeln
-        ## label_single_car_battery_status_view background nach Batteriestand färben < 10% => rot
-        ## Funktion soll während der Fahrzeug intervallmäßig laufen, wenn auf Startbutton gedrück wurde
+        ## label_single_car_battery_status_view background nach Batteriestand faerben < 10% => rot
+        ## Funktion soll waehrend der Fahrzeug intervallmaessig laufen, wenn auf Startbutton gedrueckt wurde
         print("test")
 
     def changeSpeed(self):
         ## Diese Funktion soll nach loslassen des Reglers den Wert der Scale auslesen
-        ## Außerdem soll sie die Geschwindigkeit des ausgewählten Fahrzeug (siehe Dropdown) steuern
+        ## Ausserdem soll sie die Geschwindigkeit des ausgewaehlten Fahrzeug (siehe Dropdown) steuern
         ## optionMenu (input_field)
         print("coming soon")

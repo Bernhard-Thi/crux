@@ -1,4 +1,4 @@
-from src.gui import Gui
+import Gui
 
 if __name__ == '__main__':
     Gui.main()
