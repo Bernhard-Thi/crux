@@ -35,8 +35,10 @@ class FancyBackend:
         self._speed = new_speed
 
     def transitionCallback(self, addr):
+        t = time.perf_counter()
         if addr == self._target_mac:
-            self._transition_time = time.perf_counter()
+            diff = self._transition_time - t
+            self._transition_time = t
             self._transitions = (self._transitions + 1) % 8
         else:
             print(f"unexpected mac in transition callback [{addr}], expected [{self._target_mac}]")
