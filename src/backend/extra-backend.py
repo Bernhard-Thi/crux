@@ -117,7 +117,7 @@ def main():
                 if blue_car.getTransitions() == 6:
                     speed = random_speed()
                     stopped_car.changeSpeed(speed)
-                    red_car.setEngineLight(0, 15, 0)
+                    red_car.getOverdrive().setEngineLight(0, 15, 0)
                     break
 
 
