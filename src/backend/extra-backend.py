@@ -16,7 +16,6 @@ class FancyBackend:
         self._speed = 0
         self._battery = 0
         self._overdrive = Overdrive(mac_addr)
-
         # setup callbacks
         self.getOverdrive().setTransitionCallback(self.transitionCallback)
         self.getOverdrive().setBatteryCallback(self.batteryCallback)
@@ -27,13 +26,17 @@ class FancyBackend:
     def getTransitions(self):
         return self._transitions
 
+    def getTransitionTime(self):
+        return self._transition_time
+
     #TODO check
     def changeSpeed(self, new_speed, accel=1000):
         self.getOverdrive().changeSpeed(new_speed, accel)
-        self._speed = speed
+        self._speed = new_speed
 
     def transitionCallback(self, addr):
         if addr == self._target_mac:
+            self._transition_time = time.perf_counter()
             self._transitions = (self._transitions + 1) % 8
         else:
             print(f"unexpected mac in transition callback [{addr}], expected [{self._target_mac}]")
@@ -87,7 +90,7 @@ def main():
     ### Collision-Detection-ALgorithm
     while True:
 
-        diff_time = time.perf_counter() - red_car.getTransitions()
+        diff_time = time.perf_counter() - red_car.getTransitionTime();
 
         # NUMBER 1
 
@@ -118,3 +121,5 @@ def main():
                     break
 
 
+if __name__ == "__main__":
+    main()
