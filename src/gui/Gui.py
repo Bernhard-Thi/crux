@@ -54,7 +54,7 @@ class Gui(Frame):
         input_field.pack()
 
         button_connect = Button(connection_area, text="Verbinden")
-        button_connect.bind('<Button-1>', self.connect)
+        button_connect.bind('<Button-1>', self.connect_first)
         button_connect.pack()
 
 # ###### ------- Fahrzeugkontroll Bereich: ------- #######
@@ -125,7 +125,7 @@ class Gui(Frame):
         second_label_field.pack()
 
         second_button_connect = Button(connection_area_second, text="Verbinden")
-        second_button_connect.bind('<Button-1>', self.connect)
+        second_button_connect.bind('<Button-1>', self.connect_second)
         second_button_connect.pack()
 
         # ###### ------- Fahrzeugkontroll Bereich: ------- #######
@@ -180,12 +180,15 @@ class Gui(Frame):
         ## entry_connection_add auslesen und in mac_list einfuegen
         print(f"add_mac {event}")
 
-    def connect(self, event):
+    def connect_first(self, event):
+        print(f"connect 1 {event}")
+
+    def connect_second(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print(f"connect {event}")
+        print(f"connect 2 {event}")
 
     def disconnect(self, event):
         ## Was soll diese Funktion machen?
