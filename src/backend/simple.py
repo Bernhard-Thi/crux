@@ -10,6 +10,9 @@ import threading
 
 
 class FancyBackend:
+    global carPositions
+    carPositions = [0,0]
+
     def __init__(self, mac_addr):
         self._target_mac = mac_addr
         self._transitions = 0
@@ -43,11 +46,39 @@ class FancyBackend:
         self._speed = new_speed
 
     def transitionCallback(self, addr):
+        global carPositions
+
         t = time.perf_counter()
-        if addr == self._target_mac:
-            diff = self._transition_time - t
-            self._transition_time = t
-            self._transitions = (self._transitions + 1) % 8
+
+        diff = self._transition_time - t
+        self._transition_time = t
+        self._transitions = (self._transitions + 1) % 8
+
+        
+        map_loc_file = open('/opt/lampp/htdocs/GTAIngolstadt/location.txt', 'w+')
+        json_output = map_loc_file.readlines()
+        map_loc_file.truncate(0)
+
+
+        if addr.lower() in 'ed:00:db:97:c2:de':
+
+            carPositions[0] = self._transitions
+            new_json_str = '{\n \"red_car\": \"piece' + str(carPositions[0]) + '\",\n \"blue_car\": '
+            new_json_str += '\"piece' + str(carPositions[1]) + '\"\n}'
+            map_loc_file.write(new_json_str)
+            json_output = map_loc_file.readlines()
+
+            map_loc_file.close()
+
+        elif addr.lower() in 'FD:97:48:FB:A7:FE'.lower():
+
+            carPositions[1] = self._transitions
+            new_json_str = '{\n \"red_car\": \"piece' + str(carPositions[0]) + '\",\n \"blue_car\": '
+            new_json_str += '\"piece' + str(carPositions[1]) + '\"\n}'
+            map_loc_file.write(new_json_str)
+            json_output = map_loc_file.readlines()
+
+            map_loc_file.close()
         else:
             print(f"unexpected mac in transition callback [{addr}], expected [{self._target_mac}]")
 
@@ -128,7 +159,7 @@ class Tour:
                 print("N1")
                 stopped_car = Tour.carBrake(red_car, blue_car, diff_time, speed)
                 while True:
-                    if blue_car.getTransitions() == 1 or blue_car.getTransitions() == 2:
+                    if blue_car.getTransitions() == 2:
                         sleep(0.5)
                         speed = self.random_speed()
                         stopped_car.changeSpeed(speed)
