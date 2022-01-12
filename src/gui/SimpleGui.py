@@ -115,7 +115,7 @@ class CarFrame(ttk.Frame):
         mac = self.getMac()
         print(f"conecting to {mac}")
         be = FancyBackend(mac)
-        if be._connected:
+        if be.getOverdrive()._connected:
             self.backend = be
         else:
             print(f"{self.car_name} failed to connect to {mac} ")
