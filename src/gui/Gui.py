@@ -142,7 +142,7 @@ class Gui(Frame):
         scale_second_car_speed = Scale(
             control_area_second,
             from_=0,
-            to=1000,
+            to=7000,
             orient=HORIZONTAL,
             length=200,
             command=self.handle_scale_second
@@ -203,19 +203,21 @@ class Gui(Frame):
     def connect_second(self, event):
         self.car_second = Gui.connect(self.get_mac_second())
 
+    # min speed
     def handle_scale_first(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print("Klappt")
+        print("Klappt {event}")
 
+    # max speed
     def handle_scale_second(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print("Klappt")
+        print("Klappt {event}")
 
     def startCar(self, event):
         ## Was soll diese Funktion machen?
