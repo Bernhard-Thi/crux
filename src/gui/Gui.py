@@ -1,5 +1,4 @@
-from tkinter import Tk, BOTH, LEFT, RAISED, RIDGE, RIGHT, Y, Scale, HORIZONTAL, Button, OptionMenu, \
-    StringVar
+from tkinter import Tk, BOTH, LEFT, RAISED, RIDGE, RIGHT, Y, HORIZONTAL, Button, OptionMenu, StringVar
 from tkinter.ttk import Frame, Label, Entry
 
 from backend.simple import Tour, FancyBackend
@@ -63,20 +62,6 @@ class Gui(Frame):
         control_area = Frame(left_side, relief=RIDGE, borderwidth=2)
         control_area.pack()
 
-# --- Geschwindigkeitskontrolle ---
-        label_single_car_speed = Label(control_area, text="Geschwindigkeit", width=48, anchor="w")
-        label_single_car_speed.pack()
-
-        self.scale_single_car_speed = Scale(
-            control_area,
-            from_=1,
-            to=6,
-            orient=HORIZONTAL,
-            length=200,
-            command=self.handle_scale_first
-        )
-        self.scale_single_car_speed.pack()
-
 
 # ###### ------- Platzhalter Bereich: ------- #######
         placeholder_area = Frame(left_side, relief=RIDGE, borderwidth=2, height=200)
@@ -125,19 +110,6 @@ class Gui(Frame):
         control_area_second = Frame(right_side, relief=RIDGE, borderwidth=2)
         control_area_second.pack()
 
-        # --- Geschwindigkeitskontrolle ---
-        label_second_car_speed = Label(control_area_second, text="Geschwindigkeit", width=48, anchor="w")
-        label_second_car_speed.pack()
-
-        self.scale_second_car_speed = Scale(
-            control_area_second,
-            from_=4,
-            to=7,
-            orient=HORIZONTAL,
-            length=200,
-            command=self.handle_scale_second
-        )
-        self.scale_second_car_speed.pack()
 
         # ###### ------- Platzhalter Bereich: ------- #######
         placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=270)
@@ -181,23 +153,6 @@ class Gui(Frame):
 
     def connect_second(self, event):
         self.car_second = Gui.connect(self.get_mac_second())
-
-    # min speed
-    def handle_scale_first(self, event):
-        ## Was soll diese Funktion machen?
-        ## Dropdown disablen
-        ## Connect anstossen
-        ## Button soll Disconnect Button werden
-        self.tour.setMinSpeed(event)
-        self.scale_second_car_speed.config(_from=event)
-
-    # max speed
-    def handle_scale_second(self, event):
-        ## Was soll diese Funktion machen?
-        ## Dropdown disablen
-        ## Connect anstossen
-        self.tour.setMaxSpeed(event)
-        self.scale_single_car_speed.config(to=event)
 
     def startCar(self, event):
         ## Was soll diese Funktion machen?
