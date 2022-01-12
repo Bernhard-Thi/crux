@@ -50,14 +50,7 @@ class Gui(Frame):
         label_single_car_connection.pack()
 
 # --- MAC-Adressen der Fahrzeuge ---
-        mac_list = [
-            "ed:00:db:97:c2:de",
-            "fd:97:48:fb:a7:fe"
-        ]
-
-        chosen_value = StringVar(self)
-        chosen_value.set(mac_list[0])
-        input_field = OptionMenu(connection_area, chosen_value, *mac_list)
+        input_field = Label(connection_area, text="ed:00:db:97:c2:de")
         input_field.pack()
 
         button_connect = Button(connection_area, text="Verbinden")
@@ -99,16 +92,6 @@ class Gui(Frame):
 # ###### ------- Button Bereich: ------- #######
         button_area = Frame(left_side, relief=RIDGE, borderwidth=2)
         button_area.pack()
-
-# --- Start/Stop Button ---
-        placeholder_button = Label(button_area, text="", width=33)
-        placeholder_button.pack(side=LEFT)
-
-        button_start = Button(button_area, text="Start")
-        button_start.pack(side=LEFT)
-
-        button_stop = Button(button_area, text="Stop")
-        button_stop.pack(side=LEFT)
 
 # ###### ------- Rechte Seite ------- #######
         right_side = Frame(self, relief=RAISED, borderwidth=2)
@@ -174,7 +157,7 @@ class Gui(Frame):
         label_second_car_battery_status_view.pack()
 
         # ###### ------- Platzhalter Bereich: ------- #######
-        placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=200)
+        placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=270)
         placeholder_area_second.pack()
 
         # ###### ------- Button Bereich: ------- #######
