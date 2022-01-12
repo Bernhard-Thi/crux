@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6cd0f2f8-d633-40f8-900f-4e43e9484049" name="Changes" comment="reworked typos">
+    <list default="true" id="6cd0f2f8-d633-40f8-900f-4e43e9484049" name="Changes" comment="reworked minor mistakes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/Gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Gui.py" afterDir="false" />
     </list>
@@ -125,7 +125,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642018712491</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="reworked minor mistakes">
+      <created>1642019176356</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1642019176356</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,6 +187,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="reworked Gui" />
     <MESSAGE value="reworked typos" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworked typos" />
+    <MESSAGE value="reworked minor mistakes" />
+    <option name="LAST_COMMIT_MESSAGE" value="reworked minor mistakes" />
   </component>
 </project>

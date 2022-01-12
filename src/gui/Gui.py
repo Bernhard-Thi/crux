@@ -72,7 +72,8 @@ class Gui(Frame):
             from_=0,
             to=1000,
             orient=HORIZONTAL,
-            length=200
+            length=200,
+            command=self.handle_scale_first
         )
         scale_single_car_speed.pack()
 
@@ -143,7 +144,8 @@ class Gui(Frame):
             from_=0,
             to=1000,
             orient=HORIZONTAL,
-            length=200
+            length=200,
+            command=self.handle_scale_second
         )
         scale_second_car_speed.pack()
 
@@ -172,15 +174,13 @@ class Gui(Frame):
 
         second_button_start = Button(second_button_area, text="Start")
         second_button_start.pack(side=LEFT)
+        second_button_start.bind('<Button-1>', self.startCar)
 
         second_button_stop = Button(second_button_area, text="Stop")
         second_button_stop.pack(side=LEFT)
+        second_button_stop.bind('<Button-1>', self.stopCar)
 
 
-    def add_mac(self, event):
-        ## Was soll diese Funktion machen?
-        ## entry_connection_add auslesen und in mac_list einfuegen
-        print(f"add_mac {event}")
 
     def connect_first(self, event):
         print(f"connect 1 {event}")
@@ -192,23 +192,30 @@ class Gui(Frame):
         ## Button soll Disconnect Button werden
         print(f"connect 2 {event}")
 
-    def disconnect(self, event):
+    def handle_scale_first(self, event):
         ## Was soll diese Funktion machen?
-        ## Dropdown enablen
-        ## Fahrzeuge disconnecten
-        ## Button soll Connect Button werden
-        print(f"disconnect {event}")
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")
 
-    def check_battery(self):
+    def handle_scale_second(self, event):
         ## Was soll diese Funktion machen?
-        ## Batterie Status ueberpruefen
-        ## xxx des label_single_car_battery_status in 038% umwandeln
-        ## label_single_car_battery_status_view background nach Batteriestand faerben < 10% => rot
-        ## Funktion soll waehrend der Fahrzeug intervallmaessig laufen, wenn auf Startbutton gedrueckt wurde
-        print("check_battery")
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")
 
-    def changeSpeed(self):
-        ## Diese Funktion soll nach loslassen des Reglers den Wert der Scale auslesen
-        ## Ausserdem soll sie die Geschwindigkeit des ausgewaehlten Fahrzeug (siehe Dropdown) steuern
-        ## optionMenu (input_field)
-        print("changeSpeed")
+    def startCar(self, event):
+        ## Was soll diese Funktion machen?
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")
+
+    def stopCar(self, event):
+        ## Was soll diese Funktion machen?
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")
