@@ -2,6 +2,8 @@ from tkinter import Tk, BOTH, LEFT, RAISED, RIDGE, RIGHT, Y, Scale, HORIZONTAL, 
     StringVar
 from tkinter.ttk import Frame, Label, Entry
 
+from backend.simple import Tour, FancyBackend
+
 
 def main():
     root = Tk()
