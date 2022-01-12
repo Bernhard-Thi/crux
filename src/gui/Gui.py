@@ -33,7 +33,7 @@ class Gui(Frame):
             text="Einzelfahrzeug",
             width=50,
             anchor="center",
-            background="lightblue",
+            background="red",
             relief=RAISED
         )
         label_single_car.pack()
@@ -70,7 +70,7 @@ class Gui(Frame):
         scale_single_car_speed = Scale(
             control_area,
             from_=0,
-            to=1000,
+            to=600,
             orient=HORIZONTAL,
             length=200,
             command=self.handle_scale_first
@@ -105,7 +105,7 @@ class Gui(Frame):
             text="Zweites Fahrzeug - MAC-Adresse",
             width=50,
             anchor="center",
-            background="lightgreen",
+            background="blue",
             relief=RAISED
         )
         label_second_car.pack()
