@@ -93,10 +93,10 @@ class Tour:
         return random.randint(self.min_speed, self.max_speed)
 
     def stop(self):
-        self.stop = True
+        self._stop = True
 
     def start(self):
-        self.stop = False
+        self._stop = False
         red_car = self.get_red_car()
         blue_car = self.get_blue_car()
         if red_car != None and blue_car != None:
@@ -117,7 +117,7 @@ class Tour:
         sleep(1)
 
         ### Collision-Detection-ALgorithm
-        while not self.stop:
+        while not self._stop:
 
             diff_time = time.perf_counter() - red_car.getTransitionTime();
 
