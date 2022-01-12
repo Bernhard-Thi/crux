@@ -188,7 +188,6 @@ class Gui(Frame):
         return "fd:97:48:fb:a7:fe"
 
     def connect(mac):
-        mac = self.getMac()
         print(f"connecting to {mac}")
         be = FancyBackend(mac)
         if be.getOverdrive()._connected:
