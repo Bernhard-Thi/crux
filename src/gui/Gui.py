@@ -10,6 +10,7 @@ def main():
     root.mainloop()
 
 
+
 class Gui(Frame):
 #    def __init__(self, _backend):
     def __init__(self):
@@ -43,7 +44,7 @@ class Gui(Frame):
 # --- Verbindungen ---
         label_single_car_connection = Label(
             connection_area,
-            text="Verbundenes Einzelauto - MAC Adresse",
+            text="Erstes Auto - MAC Adresse",
             width=48,
             anchor="w"
         )
@@ -63,13 +64,6 @@ class Gui(Frame):
         button_connect = Button(connection_area, text="Verbinden")
         button_connect.bind('<Button-1>', self.connect)
         button_connect.pack()
-
-        entry_conncection_add = Entry(connection_area)
-        entry_conncection_add.pack()
-
-        button_connection_add = Button(connection_area, text="Adresse hinzufuegen")
-        button_connection_add.bind('<Button-1>', self.add_mac)
-        button_connection_add.pack()
 
 # ###### ------- Fahrzeugkontroll Bereich: ------- #######
         control_area = Frame(left_side, relief=RIDGE, borderwidth=2)
@@ -119,52 +113,84 @@ class Gui(Frame):
 
 # ###### ------- Rechte Seite ------- #######
         right_side = Frame(self, relief=RAISED, borderwidth=2)
-        right_side.pack(side=RIGHT, fill=Y)
+        right_side.pack(side=LEFT, fill=Y)
 
-        label_multiple_car = Label(
-            right_side,
-            text="Schwarm",
+        label_second_car = Label(
+            left_side,
+            text="Einzelfahrzeug",
             width=50,
             anchor="center",
-            background="lightgreen",
+            background="lightblue",
             relief=RAISED
         )
-        label_multiple_car.pack()
+        label_second_car.pack()
 
-# --- Geschwindigkeitskontrolle Schwarm ---
-        speed_multiple_area = Frame(right_side, relief=RIDGE, borderwidth=2)
-        speed_multiple_area.pack()
+        # ###### ------- Connection Bereich: ------- #######
+        connection_area_second = Frame(left_side, relief=RIDGE, borderwidth=2)
+        connection_area_second.pack()
 
-        label_multiple_car_speed = Label(speed_multiple_area, text="Geschwindigkeit", width=50, anchor="w")
-        label_multiple_car_speed.pack()
+        # --- Verbindungen ---
+        label_second_car_connection = Label(
+            connection_area_second,
+            text="Zweites Auto - MAC Adresse",
+            width=48,
+            anchor="w"
+        )
+        label_second_car_connection.pack()
 
-        scale_single_car_speed = Scale(
-            speed_multiple_area,
+        # --- MAC-Adressen der Fahrzeuge ---
+        second_label_field = Label(connection_area, text="fd:97:48:fb:a7:fe")
+        second_label_field.pack()
+
+        second_button_connect = Button(connection_area, text="Verbinden")
+        second_button_connect.bind('<Button-1>', self.connect)
+        second_button_connect.pack()
+
+        # ###### ------- Fahrzeugkontroll Bereich: ------- #######
+        second_control_area = Frame(right_side, relief=RIDGE, borderwidth=2)
+        second_control_area.pack()
+
+        # --- Geschwindigkeitskontrolle ---
+        label_second_car_speed = Label(control_area_second, text="Geschwindigkeit", width=48, anchor="w")
+        label_second_car_speed.pack()
+
+        scale_second_car_speed = Scale(
+            control_area,
             from_=0,
             to=1000,
             orient=HORIZONTAL,
             length=200
         )
-        scale_single_car_speed.pack(padx=5, pady=5)
+        scale_second_car_speed.pack()
 
-# --- List of other cars
-        multiple_car_information_area = Frame(right_side, relief=RIDGE, borderwidth=2)
-        multiple_car_information_area.pack()
+        # --- Batterie Anzeige ---
+        label_second_car_battery = Label(control_area_second, text="Batterieanzeige", width=48, anchor="w")
+        label_second_car_battery.pack()
 
-        mac_list_multiple = [
-            ("car_name", "fd:97:48:fb:a7:fe"),
-            ("example", "00:00:00:00:00:00")
-        ]
+        label_second_car_battery_status = Label(control_area_second, text="xxx %", width=48, anchor="center")
+        label_second_car_battery_status.pack()
 
-        for cars in mac_list_multiple:
-            car_area = Frame(multiple_car_information_area)
-            car_area.pack()
-            label = Label(car_area, text=cars[0] + " mit MAC (" + cars[1] + ")", width=48)
-            label.pack()
-            label_battery = Label(car_area, text="Batteriestatus: ")
-            label_battery.pack(side=LEFT)
-            display_battery = Label(car_area, text="", width=35, background="yellow")
-            display_battery.pack(side=LEFT)
+        # --- Batterie Styles ---
+        label_second_car_battery_status_view = Label(control_area_second, text="", width=5, background="yellow")
+        label_second_car_battery_status_view.pack()
+
+        # ###### ------- Platzhalter Bereich: ------- #######
+        placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=200)
+        placeholder_area_second.pack()
+
+        # ###### ------- Button Bereich: ------- #######
+        second_button_area = Frame(right_side, relief=RIDGE, borderwidth=2)
+        second_button_area.pack()
+
+        # --- Start/Stop Button ---
+        second_placeholder_button = Label(second_button_area, text="", width=33)
+        second_placeholder_button.pack(side=LEFT)
+
+        second_button_start = Button(second_button_area, text="Start")
+        second_button_start.pack(side=LEFT)
+
+        second_button_stop = Button(second_button_area, text="Stop")
+        second_button_stop.pack(side=LEFT)
 
 
     def add_mac(self, event):
