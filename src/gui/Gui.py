@@ -170,21 +170,21 @@ class Gui(Frame):
     def add_mac(self, event):
         ## Was soll diese Funktion machen?
         ## entry_connection_add auslesen und in mac_list einfuegen
-        print("coming soon")
+        print(f"add_mac {event}")
 
     def connect(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print("coming soon")
+        print(f"connect {event}")
 
     def disconnect(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown enablen
         ## Fahrzeuge disconnecten
         ## Button soll Connect Button werden
-        print("coming soon")
+        print(f"disconnect {event}")
 
     def check_battery(self):
         ## Was soll diese Funktion machen?
@@ -192,10 +192,10 @@ class Gui(Frame):
         ## xxx des label_single_car_battery_status in 038% umwandeln
         ## label_single_car_battery_status_view background nach Batteriestand faerben < 10% => rot
         ## Funktion soll waehrend der Fahrzeug intervallmaessig laufen, wenn auf Startbutton gedrueckt wurde
-        print("test")
+        print("check_battery")
 
     def changeSpeed(self):
         ## Diese Funktion soll nach loslassen des Reglers den Wert der Scale auslesen
         ## Ausserdem soll sie die Geschwindigkeit des ausgewaehlten Fahrzeug (siehe Dropdown) steuern
         ## optionMenu (input_field)
-        print("coming soon")
+        print("changeSpeed")
