@@ -10,7 +10,6 @@ def main():
     root.mainloop()
 
 
-
 class Gui(Frame):
 #    def __init__(self, _backend):
     def __init__(self):
@@ -116,17 +115,17 @@ class Gui(Frame):
         right_side.pack(side=LEFT, fill=Y)
 
         label_second_car = Label(
-            left_side,
-            text="Einzelfahrzeug",
+            right_side,
+            text="Zweites Fahrzeug - MAC-Adresse",
             width=50,
             anchor="center",
-            background="lightblue",
+            background="lightgreen",
             relief=RAISED
         )
         label_second_car.pack()
 
         # ###### ------- Connection Bereich: ------- #######
-        connection_area_second = Frame(left_side, relief=RIDGE, borderwidth=2)
+        connection_area_second = Frame(right_side, relief=RIDGE, borderwidth=2)
         connection_area_second.pack()
 
         # --- Verbindungen ---
@@ -139,23 +138,23 @@ class Gui(Frame):
         label_second_car_connection.pack()
 
         # --- MAC-Adressen der Fahrzeuge ---
-        second_label_field = Label(connection_area, text="fd:97:48:fb:a7:fe")
+        second_label_field = Label(connection_area_second, text="fd:97:48:fb:a7:fe")
         second_label_field.pack()
 
-        second_button_connect = Button(connection_area, text="Verbinden")
+        second_button_connect = Button(connection_area_second, text="Verbinden")
         second_button_connect.bind('<Button-1>', self.connect)
         second_button_connect.pack()
 
         # ###### ------- Fahrzeugkontroll Bereich: ------- #######
-        second_control_area = Frame(right_side, relief=RIDGE, borderwidth=2)
-        second_control_area.pack()
+        control_area_second = Frame(right_side, relief=RIDGE, borderwidth=2)
+        control_area_second.pack()
 
         # --- Geschwindigkeitskontrolle ---
         label_second_car_speed = Label(control_area_second, text="Geschwindigkeit", width=48, anchor="w")
         label_second_car_speed.pack()
 
         scale_second_car_speed = Scale(
-            control_area,
+            control_area_second,
             from_=0,
             to=1000,
             orient=HORIZONTAL,
