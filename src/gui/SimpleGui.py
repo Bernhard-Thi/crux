@@ -132,20 +132,26 @@ class App(Tk):
         self.columnconfigure(0, weight=4)
         self.columnconfigure(1, weight=1)
 
-        self.tour = Tour()
+        self.tour = Tour(self.getRedCar, self.getBlueCar)
 
         self.__create_widgets()
+
+    def getRedCar(self):
+        return self.red_car_frame.getBackend()
+
+    def getBlueCar(self):
+        return self.blue_car_frame.getBackend()
 
     def __create_widgets(self):
         #default values
         mac_list = [ "ed:00:db:97:c2:de", "fd:97:48:fb:a7:fe" ]
         # create the button frame
-        button_frame  = CarFrame(self, "rot", mac_list[0])
-        button_frame.grid(column=0, row=0)
+        self.red_car_frame  = CarFrame(self, "rot", mac_list[0])
+        self.red_car_frame.grid(column=0, row=0)
 
         # create the button frame
-        button_frame2 = CarFrame(self, "blau", mac_list[1])
-        button_frame2.grid(column=1, row=0)
+        self.blue_car_frame = CarFrame(self, "blau", mac_list[1])
+        self.blue_car_frame.grid(column=1, row=0)
 
         # create the input frame
         input_frame = ParaFrame(self, self.tour)

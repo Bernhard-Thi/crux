@@ -61,9 +61,11 @@ class FancyBackend:
 
 class Tour:
 
-    def __init__(self):
+    def __init__(self, get_red_car, get_blue_car):
         self.min_speed = 400
         self.max_speed = 800
+        self.get_red_car  = get_red_car
+        self.get_blue_car = get_blue_car
 
     def setMaxSpeed(self, new_speed):
         self.max_speed = new_speed
@@ -90,13 +92,17 @@ class Tour:
     def random_speed():
         return random.randint(self.min_speed, self.max_speed)
 
-
     def stop(self):
         self.stop = True
 
-    def start(self, red_car, blue_car):
+    def start(self):
         self.stop = False
-        threading.Thread(target=self.mainloop, args=(red_car, blue_car)).start()
+        red_car = self.get_red_car()
+        blue_car = self.get_blue_car()
+        if red_car != None and blue_car != None:
+            threading.Thread(target=self.mainloop, args=(red_car, blue_car)).start()
+        else:
+            print(f"cars are both ready")
 
     def mainloop(self, red_car, blue_car):
         speed = 0
@@ -155,4 +161,4 @@ if __name__ == "__main__":
     red_car  = FancyBackend(mac_red)
     blue_car = FancyBackend(mac_blue)
 
-    Tour().start(red_car, blue_car)
+#   Tour().start(red_car, blue_car)
