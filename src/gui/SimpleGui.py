@@ -1,7 +1,7 @@
 
 import tkinter as tk
 import tkinter.ttk as ttk
-import backend
+from backend.simple import Tour, FancyBackend
 
 
 from tkinter import Tk, BOTH, END, LEFT, RAISED, RIDGE, RIGHT, Y, Scale, HORIZONTAL, Button, OptionMenu, \
