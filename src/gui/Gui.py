@@ -191,10 +191,11 @@ class Gui(Frame):
         print(f"connecting to {mac}")
         be = FancyBackend(mac)
         if be.getOverdrive()._connected:
-            self.backend = be
             print(f"connectied to {mac} [DONE]")
+            return be
         else:
             print(f"{self.car_name} failed to connect to {mac} ")
+            return None
 
     def connect_first(self, event):
         self.car_first = Gui.connect(self.get_mac_first())
