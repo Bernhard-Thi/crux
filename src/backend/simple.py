@@ -159,12 +159,15 @@ class Tour:
                 print("N1")
                 stopped_car = Tour.carBrake(red_car, blue_car, diff_time, speed)
                 while True:
+                    if self._stop: break
                     if blue_car.getTransitions() == 2:
                         sleep(0.5)
                         speed = self.random_speed()
                         stopped_car.changeSpeed(speed)
                         red_car.getOverdrive().setEngineLight(0, 15, 0)
                         break
+
+                if self._stop: break
 
                 #N2
             if (red_car.getTransitions() == 0) and (blue_car.getTransitions() == 3 or blue_car.getTransitions() == 4):
@@ -174,11 +177,13 @@ class Tour:
                 stopped_car = Tour.carBrake(red_car, blue_car, diff_time, speed)
 
                 while True:
+                    if self._stop: break
                     if blue_car.getTransitions() == 6:
                         speed = self.random_speed()
                         stopped_car.changeSpeed(speed)
                         red_car.getOverdrive().setEngineLight(0, 15, 0)
                         break
+                if self._stop: break
 
 
         red_car.changeSpeed(0)
