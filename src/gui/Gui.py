@@ -2,6 +2,8 @@ from tkinter import Tk, BOTH, LEFT, RAISED, RIDGE, RIGHT, Y, Scale, HORIZONTAL, 
     StringVar
 from tkinter.ttk import Frame, Label, Entry
 
+#from backend.simple import Tour, FancyBackend
+
 
 def main():
     root = Tk()
@@ -43,33 +45,19 @@ class Gui(Frame):
 # --- Verbindungen ---
         label_single_car_connection = Label(
             connection_area,
-            text="Verbundenes Einzelauto - MAC Adresse",
+            text="Erstes Auto - MAC Adresse",
             width=48,
             anchor="w"
         )
         label_single_car_connection.pack()
 
 # --- MAC-Adressen der Fahrzeuge ---
-        mac_list = [
-            "ed:00:db:97:c2:de",
-            "fd:97:48:fb:a7:fe"
-        ]
-
-        chosen_value = StringVar(self)
-        chosen_value.set(mac_list[0])
-        input_field = OptionMenu(connection_area, chosen_value, *mac_list)
+        input_field = Label(connection_area, text=self.get_mac_first())
         input_field.pack()
 
         button_connect = Button(connection_area, text="Verbinden")
-        button_connect.bind('<Button-1>', self.connect)
+        button_connect.bind('<Button-1>', self.connect_first)
         button_connect.pack()
-
-        entry_conncection_add = Entry(connection_area)
-        entry_conncection_add.pack()
-
-        button_connection_add = Button(connection_area, text="Adresse hinzufuegen")
-        button_connection_add.bind('<Button-1>', self.add_mac)
-        button_connection_add.pack()
 
 # ###### ------- Fahrzeugkontroll Bereich: ------- #######
         control_area = Frame(left_side, relief=RIDGE, borderwidth=2)
@@ -84,7 +72,8 @@ class Gui(Frame):
             from_=0,
             to=1000,
             orient=HORIZONTAL,
-            length=200
+            length=200,
+            command=self.handle_scale_first
         )
         scale_single_car_speed.pack()
 
@@ -107,95 +96,138 @@ class Gui(Frame):
         button_area = Frame(left_side, relief=RIDGE, borderwidth=2)
         button_area.pack()
 
-# --- Start/Stop Button ---
-        placeholder_button = Label(button_area, text="", width=33)
-        placeholder_button.pack(side=LEFT)
-
-        button_start = Button(button_area, text="Start")
-        button_start.pack(side=LEFT)
-
-        button_stop = Button(button_area, text="Stop")
-        button_stop.pack(side=LEFT)
-
 # ###### ------- Rechte Seite ------- #######
         right_side = Frame(self, relief=RAISED, borderwidth=2)
-        right_side.pack(side=RIGHT, fill=Y)
+        right_side.pack(side=LEFT, fill=Y)
 
-        label_multiple_car = Label(
+        label_second_car = Label(
             right_side,
-            text="Schwarm",
+            text="Zweites Fahrzeug - MAC-Adresse",
             width=50,
             anchor="center",
             background="lightgreen",
             relief=RAISED
         )
-        label_multiple_car.pack()
+        label_second_car.pack()
 
-# --- Geschwindigkeitskontrolle Schwarm ---
-        speed_multiple_area = Frame(right_side, relief=RIDGE, borderwidth=2)
-        speed_multiple_area.pack()
+        # ###### ------- Connection Bereich: ------- #######
+        connection_area_second = Frame(right_side, relief=RIDGE, borderwidth=2)
+        connection_area_second.pack()
 
-        label_multiple_car_speed = Label(speed_multiple_area, text="Geschwindigkeit", width=50, anchor="w")
-        label_multiple_car_speed.pack()
+        # --- Verbindungen ---
+        label_second_car_connection = Label(
+            connection_area_second,
+            text="Zweites Auto - MAC Adresse",
+            width=48,
+            anchor="w"
+        )
+        label_second_car_connection.pack()
 
-        scale_single_car_speed = Scale(
-            speed_multiple_area,
+        # --- MAC-Adressen der Fahrzeuge ---
+        second_label_field = Label(connection_area_second, text=self.get_mac_second())
+        second_label_field.pack()
+
+        second_button_connect = Button(connection_area_second, text="Verbinden")
+        second_button_connect.bind('<Button-1>', self.connect_second)
+        second_button_connect.pack()
+
+        # ###### ------- Fahrzeugkontroll Bereich: ------- #######
+        control_area_second = Frame(right_side, relief=RIDGE, borderwidth=2)
+        control_area_second.pack()
+
+        # --- Geschwindigkeitskontrolle ---
+        label_second_car_speed = Label(control_area_second, text="Geschwindigkeit", width=48, anchor="w")
+        label_second_car_speed.pack()
+
+        scale_second_car_speed = Scale(
+            control_area_second,
             from_=0,
             to=1000,
             orient=HORIZONTAL,
-            length=200
+            length=200,
+            command=self.handle_scale_second
         )
-        scale_single_car_speed.pack(padx=5, pady=5)
+        scale_second_car_speed.pack()
 
-# --- List of other cars
-        multiple_car_information_area = Frame(right_side, relief=RIDGE, borderwidth=2)
-        multiple_car_information_area.pack()
+        # --- Batterie Anzeige ---
+        label_second_car_battery = Label(control_area_second, text="Batterieanzeige", width=48, anchor="w")
+        label_second_car_battery.pack()
 
-        mac_list_multiple = [
-            ("car_name", "fd:97:48:fb:a7:fe"),
-            ("example", "00:00:00:00:00:00")
-        ]
+        label_second_car_battery_status = Label(control_area_second, text="xxx %", width=48, anchor="center")
+        label_second_car_battery_status.pack()
 
-        for cars in mac_list_multiple:
-            car_area = Frame(multiple_car_information_area)
-            car_area.pack()
-            label = Label(car_area, text=cars[0] + " mit MAC (" + cars[1] + ")", width=48)
-            label.pack()
-            label_battery = Label(car_area, text="Batteriestatus: ")
-            label_battery.pack(side=LEFT)
-            display_battery = Label(car_area, text="", width=35, background="yellow")
-            display_battery.pack(side=LEFT)
+        # --- Batterie Styles ---
+        label_second_car_battery_status_view = Label(control_area_second, text="", width=5, background="yellow")
+        label_second_car_battery_status_view.pack()
+
+        # ###### ------- Platzhalter Bereich: ------- #######
+        placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=270)
+        placeholder_area_second.pack()
+
+        # ###### ------- Button Bereich: ------- #######
+        second_button_area = Frame(right_side, relief=RIDGE, borderwidth=2)
+        second_button_area.pack()
+
+        # --- Start/Stop Button ---
+        second_placeholder_button = Label(second_button_area, text="", width=33)
+        second_placeholder_button.pack(side=LEFT)
+
+        second_button_start = Button(second_button_area, text="Start")
+        second_button_start.pack(side=LEFT)
+        second_button_start.bind('<Button-1>', self.startCar)
+
+        second_button_stop = Button(second_button_area, text="Stop")
+        second_button_stop.pack(side=LEFT)
+        second_button_stop.bind('<Button-1>', self.stopCar)
 
 
-    def add_mac(self, event):
-        ## Was soll diese Funktion machen?
-        ## entry_connection_add auslesen und in mac_list einfuegen
-        print(f"add_mac {event}")
+    def get_mac_first(self):
+        return "ed:00:db:97:c2:de"
 
-    def connect(self, event):
+    def get_mac_second(self):
+        return "fd:97:48:fb:a7:fe"
+
+    def connect(mac):
+        mac = self.getMac()
+        print(f"connecting to {mac}")
+        be = FancyBackend(mac)
+        if be.getOverdrive()._connected:
+            self.backend = be
+            print(f"connectied to {mac} [DONE]")
+        else:
+            print(f"{self.car_name} failed to connect to {mac} ")
+
+    def connect_first(self, event):
+        self.backend_first = Gui.connect(self.get_mac_first())
+
+    def connect_second(self, event):
+        self.backend_second = Gui.connect(self.get_mac_second())
+
+
+    def handle_scale_first(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print(f"connect {event}")
+        print("Klappt")
 
-    def disconnect(self, event):
+    def handle_scale_second(self, event):
         ## Was soll diese Funktion machen?
-        ## Dropdown enablen
-        ## Fahrzeuge disconnecten
-        ## Button soll Connect Button werden
-        print(f"disconnect {event}")
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")
 
-    def check_battery(self):
+    def startCar(self, event):
         ## Was soll diese Funktion machen?
-        ## Batterie Status ueberpruefen
-        ## xxx des label_single_car_battery_status in 038% umwandeln
-        ## label_single_car_battery_status_view background nach Batteriestand faerben < 10% => rot
-        ## Funktion soll waehrend der Fahrzeug intervallmaessig laufen, wenn auf Startbutton gedrueckt wurde
-        print("check_battery")
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")
 
-    def changeSpeed(self):
-        ## Diese Funktion soll nach loslassen des Reglers den Wert der Scale auslesen
-        ## Ausserdem soll sie die Geschwindigkeit des ausgewaehlten Fahrzeug (siehe Dropdown) steuern
-        ## optionMenu (input_field)
-        print("changeSpeed")
+    def stopCar(self, event):
+        ## Was soll diese Funktion machen?
+        ## Dropdown disablen
+        ## Connect anstossen
+        ## Button soll Disconnect Button werden
+        print("Klappt")

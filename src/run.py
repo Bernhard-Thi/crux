@@ -1,4 +1,4 @@
-import gui.SimpleGui
+import gui.Gui
 
 if __name__ == '__main__':
-    gui.SimpleGui.main()
+    gui.Gui.main()
