@@ -89,7 +89,7 @@ class Tour:
             red_car.getOverdrive().setEngineLight(15, 0, 0)
             return red_car
 
-    def random_speed():
+    def random_speed(self):
         return random.randint(self.min_speed, self.max_speed)
 
     def stop(self):

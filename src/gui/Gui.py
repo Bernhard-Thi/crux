@@ -222,7 +222,6 @@ class Gui(Frame):
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print("Klappt")
         self.tour.start()
 
     def stopCar(self, event):
@@ -230,5 +229,4 @@ class Gui(Frame):
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print("Klappt")
         self.tour.stop()
