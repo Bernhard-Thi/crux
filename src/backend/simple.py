@@ -93,8 +93,8 @@ class FancyBackend:
 class Tour:
 
     def __init__(self, get_red_car, get_blue_car):
-        self.min_speed = 400
-        self.max_speed = 800
+        self.min_speed = 4
+        self.max_speed = 8
         self.get_red_car  = get_red_car
         self.get_blue_car = get_blue_car
 
@@ -121,7 +121,7 @@ class Tour:
             return red_car
 
     def random_speed(self):
-        return random.randint(self.min_speed, self.max_speed)
+        return random.randint(self.min_speed, self.max_speed) * 100
 
     def stop(self):
         self._stop = True

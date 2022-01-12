@@ -67,15 +67,15 @@ class Gui(Frame):
         label_single_car_speed = Label(control_area, text="Geschwindigkeit", width=48, anchor="w")
         label_single_car_speed.pack()
 
-        scale_single_car_speed = Scale(
+        self.scale_single_car_speed = Scale(
             control_area,
-            from_=0,
-            to=600,
+            from_=1,
+            to=6,
             orient=HORIZONTAL,
             length=200,
             command=self.handle_scale_first
         )
-        scale_single_car_speed.pack()
+        self.scale_single_car_speed.pack()
 
 
 # ###### ------- Platzhalter Bereich: ------- #######
@@ -129,15 +129,15 @@ class Gui(Frame):
         label_second_car_speed = Label(control_area_second, text="Geschwindigkeit", width=48, anchor="w")
         label_second_car_speed.pack()
 
-        scale_second_car_speed = Scale(
+        self.scale_second_car_speed = Scale(
             control_area_second,
-            from_=0,
-            to=7000,
+            from_=4,
+            to=7,
             orient=HORIZONTAL,
             length=200,
             command=self.handle_scale_second
         )
-        scale_second_car_speed.pack()
+        self.scale_second_car_speed.pack()
 
         # ###### ------- Platzhalter Bereich: ------- #######
         placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=270)
@@ -189,6 +189,7 @@ class Gui(Frame):
         ## Connect anstossen
         ## Button soll Disconnect Button werden
         self.tour.setMinSpeed(event)
+        self.scale_second_car_speed.config(_from=event)
 
     # max speed
     def handle_scale_second(self, event):
@@ -196,6 +197,7 @@ class Gui(Frame):
         ## Dropdown disablen
         ## Connect anstossen
         self.tour.setMaxSpeed(event)
+        self.scale_single_car_speed.config(to=event)
 
     def startCar(self, event):
         ## Was soll diese Funktion machen?
