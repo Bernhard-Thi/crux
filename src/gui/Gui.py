@@ -52,7 +52,7 @@ class Gui(Frame):
         label_single_car_connection.pack()
 
 # --- MAC-Adressen der Fahrzeuge ---
-        input_field = Label(connection_area, text="ed:00:db:97:c2:de")
+        input_field = Label(connection_area, text=self.get_mac_first())
         input_field.pack()
 
         button_connect = Button(connection_area, text="Verbinden")
@@ -124,7 +124,7 @@ class Gui(Frame):
         label_second_car_connection.pack()
 
         # --- MAC-Adressen der Fahrzeuge ---
-        second_label_field = Label(connection_area_second, text="fd:97:48:fb:a7:fe")
+        second_label_field = Label(connection_area_second, text=self.get_mac_second())
         second_label_field.pack()
 
         second_button_connect = Button(connection_area_second, text="Verbinden")
@@ -181,16 +181,28 @@ class Gui(Frame):
         second_button_stop.bind('<Button-1>', self.stopCar)
 
 
+    def get_mac_first(self):
+        return "ed:00:db:97:c2:de"
+
+    def get_mac_second(self):
+        return "fd:97:48:fb:a7:fe"
+
+    def connect(mac):
+        mac = self.getMac()
+        print(f"connecting to {mac}")
+        be = FancyBackend(mac)
+        if be.getOverdrive()._connected:
+            self.backend = be
+            print(f"connectied to {mac} [DONE]")
+        else:
+            print(f"{self.car_name} failed to connect to {mac} ")
 
     def connect_first(self, event):
-        print(f"connect 1 {event}")
+        self.backend_first = Gui.connect(self.get_mac_first())
 
     def connect_second(self, event):
-        ## Was soll diese Funktion machen?
-        ## Dropdown disablen
-        ## Connect anstossen
-        ## Button soll Disconnect Button werden
-        print(f"connect 2 {event}")
+        self.backend_second = Gui.connect(self.get_mac_second())
+
 
     def handle_scale_first(self, event):
         ## Was soll diese Funktion machen?
