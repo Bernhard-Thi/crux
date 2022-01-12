@@ -161,4 +161,4 @@ if __name__ == "__main__":
     red_car  = FancyBackend(mac_red)
     blue_car = FancyBackend(mac_blue)
 
-#   Tour().start(red_car, blue_car)
+    Tour(lambda: red_car, lambda: blue_car).start()
