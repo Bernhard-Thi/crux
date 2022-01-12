@@ -102,7 +102,7 @@ class Tour:
         if red_car != None and blue_car != None:
             threading.Thread(target=self.mainloop, args=(red_car, blue_car)).start()
         else:
-            print(f"cars are both ready")
+            print(f"not both cars are ready")
 
     def mainloop(self, red_car, blue_car):
         speed = 0

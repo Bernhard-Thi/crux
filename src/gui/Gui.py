@@ -2,7 +2,7 @@ from tkinter import Tk, BOTH, LEFT, RAISED, RIDGE, RIGHT, Y, Scale, HORIZONTAL, 
     StringVar
 from tkinter.ttk import Frame, Label, Entry
 
-#from backend.simple import Tour, FancyBackend
+from backend.simple import Tour, FancyBackend
 
 
 def main():
@@ -16,7 +16,7 @@ class Gui(Frame):
 #    def __init__(self, _backend):
     def __init__(self):
         super().__init__()
-#        self.backend = _backend
+        self.tour = Tour(lambda: self.car_first, lambda: self.car_second )
         self.init_ui()
 
     def init_ui(self):
@@ -198,11 +198,10 @@ class Gui(Frame):
             print(f"{self.car_name} failed to connect to {mac} ")
 
     def connect_first(self, event):
-        self.backend_first = Gui.connect(self.get_mac_first())
+        self.car_first = Gui.connect(self.get_mac_first())
 
     def connect_second(self, event):
-        self.backend_second = Gui.connect(self.get_mac_second())
-
+        self.car_second = Gui.connect(self.get_mac_second())
 
     def handle_scale_first(self, event):
         ## Was soll diese Funktion machen?
@@ -224,6 +223,7 @@ class Gui(Frame):
         ## Connect anstossen
         ## Button soll Disconnect Button werden
         print("Klappt")
+        self.tour.start()
 
     def stopCar(self, event):
         ## Was soll diese Funktion machen?
@@ -231,3 +231,4 @@ class Gui(Frame):
         ## Connect anstossen
         ## Button soll Disconnect Button werden
         print("Klappt")
+        self.tour.stop()
