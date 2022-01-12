@@ -77,16 +77,6 @@ class Gui(Frame):
         )
         scale_single_car_speed.pack()
 
-# --- Batterie Anzeige ---
-        label_single_car_battery = Label(control_area, text="Batterieanzeige", width=48, anchor="w")
-        label_single_car_battery.pack()
-
-        label_single_car_battery_status = Label(control_area, text="xxx %", width=48, anchor="center")
-        label_single_car_battery_status.pack()
-
-# --- Batterie Styles ---
-        label_single_car_battery_status_view = Label(control_area, text="", width=5, background="yellow")
-        label_single_car_battery_status_view.pack()
 
 # ###### ------- Platzhalter Bereich: ------- #######
         placeholder_area = Frame(left_side, relief=RIDGE, borderwidth=2, height=200)
@@ -149,17 +139,6 @@ class Gui(Frame):
         )
         scale_second_car_speed.pack()
 
-        # --- Batterie Anzeige ---
-        label_second_car_battery = Label(control_area_second, text="Batterieanzeige", width=48, anchor="w")
-        label_second_car_battery.pack()
-
-        label_second_car_battery_status = Label(control_area_second, text="xxx %", width=48, anchor="center")
-        label_second_car_battery_status.pack()
-
-        # --- Batterie Styles ---
-        label_second_car_battery_status_view = Label(control_area_second, text="", width=5, background="yellow")
-        label_second_car_battery_status_view.pack()
-
         # ###### ------- Platzhalter Bereich: ------- #######
         placeholder_area_second = Frame(right_side, relief=RIDGE, borderwidth=2, height=270)
         placeholder_area_second.pack()
@@ -209,15 +188,14 @@ class Gui(Frame):
         ## Dropdown disablen
         ## Connect anstossen
         ## Button soll Disconnect Button werden
-        print("Klappt {event}")
+        self.tour.setMinSpeed(event)
 
     # max speed
     def handle_scale_second(self, event):
         ## Was soll diese Funktion machen?
         ## Dropdown disablen
         ## Connect anstossen
-        ## Button soll Disconnect Button werden
-        print("Klappt {event}")
+        self.tour.setMaxSpeed(event)
 
     def startCar(self, event):
         ## Was soll diese Funktion machen?
